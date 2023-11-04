@@ -1,27 +1,25 @@
 import { Body, Controller, Delete, Get, Inject, Param, Post, Put } from '@nestjs/common';
 import { ClientProxy, EventPattern } from '@nestjs/microservices';
 import * as bcrypt from 'bcrypt';
+import {log} from 'console';
 
 
 
 @Controller('users')
 export class UserController {
     constructor(
-        @Inject('USER_SERVICE') private client: ClientProxy
-    ) {
-        
-    }
+        @Inject('USER_SERVICE') private readonly client: ClientProxy
+    ) {}
 
     @Get()
     async all() {
-        const result = this.client.send('user_request_all', {});
+        const result = await this.client.send('user_request_all', {});
         return result;
-        //return this.userService.all();
     }
 
     @EventPattern('test')
-    async hello(data: string) {
-        console.log(data);
+    async hello() {
+        console.log("  ");
     }
 
     @EventPattern('product_created')
@@ -38,7 +36,9 @@ export class UserController {
         @Body('password') password: string,
         ) {
             const hashedPassword = await bcrypt.hash(password, 12);
-            const result = this.client.send('user_created_gateway', {firstName, lastName, email, password})
+            console.log("register");
+            
+            const result = this.client.send('user_created_gateway', {firstName, lastName, email, password});
             return result;
         // return this.userService.register({
         //     firstName,
