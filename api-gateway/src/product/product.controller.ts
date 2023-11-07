@@ -15,7 +15,7 @@ export class ProductController {
         return result;
     }
 
-    @Post()
+    @Post('create')
     async create(
         @Body('title') title: string,
         @Body('description') description: string,
@@ -42,7 +42,7 @@ export class ProductController {
 
     @Get(':id')
     async get(@Param('id') id: number){
-        const result = this.client.send('post_request_single', {id})
+        const result = this.client.send('product_request_single', {id})
         return result;
         // return this.productService.get(id);
     }
