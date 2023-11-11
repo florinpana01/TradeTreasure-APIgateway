@@ -7,19 +7,29 @@ import {ClientsModule, Transport} from '@nestjs/microservices';
 @Module({
   imports: [
     TypeOrmModule.forFeature([Product]),
-    ProductModule,
     ClientsModule.register([
       {
         name: 'PRODUCT_SERVICE',
         transport: Transport.RMQ,
         options: {
           urls: ['amqps://pjfufoya:LuO22_OIV_SIcvDewsRCbu_nTAUooYvt@kangaroo.rmq.cloudamqp.com/pjfufoya'],
-          queue: "products_queue",
+          queue: "products-queue-gateway",
           queueOptions: {
             durable: false
           },
         },
       },
+      {
+        name: 'TIMELINE_SERVICE',
+        transport: Transport.RMQ,
+        options: {
+          urls: ['amqps://pjfufoya:LuO22_OIV_SIcvDewsRCbu_nTAUooYvt@kangaroo.rmq.cloudamqp.com/pjfufoya'],
+          queue: "products-queue",
+          queueOptions: {
+            durable: false
+          },
+        },
+      }
     ]),
   ],
   controllers: [ProductController]
