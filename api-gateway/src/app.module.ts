@@ -7,6 +7,7 @@ import {TypeOrmModule} from '@nestjs/typeorm';
 import {User} from './user/user.entity';
 import { LikeController } from './like/like.controller';
 import { LikeModule } from './like/like.module';
+import { FollowModule } from './follow/follow.module';
 
 @Module({
   //testing
@@ -28,6 +29,7 @@ import { LikeModule } from './like/like.module';
     UserModule,
     ProductModule,
     LikeModule,
+    FollowModule,
   ],
   controllers: [AppController, LikeController],
   providers: [AppService],

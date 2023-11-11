@@ -16,7 +16,7 @@ import {User} from './user.entity';
         transport: Transport.RMQ,
         options: {
           urls: ['amqps://pjfufoya:LuO22_OIV_SIcvDewsRCbu_nTAUooYvt@kangaroo.rmq.cloudamqp.com/pjfufoya'],
-          queue: "users_queue",
+          queue: "users-queue-gateway",
           queueOptions: {
             durable: false
           },
