@@ -5,6 +5,8 @@ import { UserModule } from './user/user.module';
 import { ProductModule } from './product/product.module';
 import {TypeOrmModule} from '@nestjs/typeorm';
 import {User} from './user/user.entity';
+import { LikeController } from './like/like.controller';
+import { LikeModule } from './like/like.module';
 
 @Module({
   //testing
@@ -25,8 +27,9 @@ import {User} from './user/user.entity';
     //TypeOrmModule.forFeature([User]),
     UserModule,
     ProductModule,
+    LikeModule,
   ],
-  controllers: [AppController],
+  controllers: [AppController, LikeController],
   providers: [AppService],
 })
 export class AppModule {}
