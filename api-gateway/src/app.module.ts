@@ -14,24 +14,20 @@ import { FollowModule } from './follow/follow.module';
   imports: [
     TypeOrmModule.forRoot({
       type: 'mysql',
-      // host: '127.0.0.1',
       host: 'localhost',
       port: 3306,
-      // username: 'florinpana98',
       username: 'root',
-      // password: 'totamealand',
       password: 'Totamealand1983',
       database: 'api_temp',
       autoLoadEntities: true,
       synchronize: true,
     }),
-    //TypeOrmModule.forFeature([User]),
     UserModule,
     ProductModule,
     LikeModule,
     FollowModule,
   ],
-  controllers: [AppController, LikeController],
+  controllers: [AppController],
   providers: [AppService],
 })
 export class AppModule {}

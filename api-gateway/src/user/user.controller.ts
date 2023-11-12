@@ -38,14 +38,8 @@ export class UserController {
             const hashedPassword = await bcrypt.hash(password, 12);
             console.log("register");
             
-            const result = this.client.send('user_created_gateway', {firstName, lastName, email, password});
+            const result = this.client.send('user_created_gateway', {firstName, lastName, email, password: hashedPassword});
             return result;
-        // return this.userService.register({
-        //     firstName,
-        //     lastName,
-        //     email,
-        //     password
-        // });
     }
 
     @Get(':id')
