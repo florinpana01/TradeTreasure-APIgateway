@@ -44,7 +44,8 @@ export class UserController {
 
     @Get(':id')
     async get(@Param('id') id: number){
-        const result = this.client.send('user_request_single', {id})
+        console.log("id: ", id);
+        const result = this.client.send('user_request_single', id);
         return result;
         // return this.userService.get(id);
     }

@@ -8,11 +8,18 @@ export class ProductController {
         @Inject('PRODUCT_SERVICE') private readonly productClient: ClientProxy,
         @Inject('TIMELINE_SERVICE') private timelineClient: ClientProxy
         ) {}
-    @Get()
-    async all() {
+        //only the first one works. Later in development, get all should only come from the timeline
+        @Get()
+    async allProduct() {
+        const result = await this.productClient.send('product_request_all', {});
+        return result;
+    }
+        @Get()
+    async allTimeline() {
         const result = await this.timelineClient.send('product_request_all', {});
         return result;
     }
+
 
     @Post('create')
     async create(
@@ -26,8 +33,16 @@ export class ProductController {
 
     @Get(':id')
     async get(@Param('id') id: number){
-        const result = this.timelineClient.send('product_request_single', {id})
+        const result = this.productClient.send('product_request_single', id)
         return result;
+    }
+
+    @Get('user/:user_id')
+    async getByUser(@Param('user_id') user_id: number) {
+        console.log(`getting all products for user ${user_id}`);
+        const result = this.productClient.send('products_by_user_gateway', user_id);
+        return result;
+        //return this.productService.getByUser(userId);
     }
 
     @Put(':id')
@@ -42,6 +57,8 @@ export class ProductController {
 
     @Delete(':id')
     async delete(@Param('id') id: number) {
-        const result = this.productClient.send('product_deleted_gateway', {id});
+        console.log('deleting product number: ', id);
+        const result = this.productClient.send('product_deleted_gateway', id);
+        return result;
     }
 }
