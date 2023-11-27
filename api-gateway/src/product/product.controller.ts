@@ -26,8 +26,9 @@ export class ProductController {
         @Body('title') title: string,
         @Body('description') description: string,
         @Body('user_id') user_id: number,
+        @Body('category') category: string,
         ) {
-            const result = this.productClient.send('product_created_gateway', {title, description, user_id});
+            const result = this.productClient.send('product_created_gateway', {title, description, category, user_id});
             return result;
     }
 
@@ -41,6 +42,14 @@ export class ProductController {
     async getByUser(@Param('user_id') user_id: number) {
         console.log(`getting all products for user ${user_id}`);
         const result = this.productClient.send('products_by_user_gateway', user_id);
+        return result;
+        //return this.productService.getByUser(userId);
+    }
+
+    @Get('category/:category')
+    async getByCategory(@Param('category') category: string) {
+        console.log(`getting all products from the ${category} section:`);
+        const result = this.productClient.send('products_by_category_gateway', category);
         return result;
         //return this.productService.getByUser(userId);
     }
