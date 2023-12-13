@@ -8,15 +8,14 @@ export class ProductController {
         @Inject('PRODUCT_SERVICE') private readonly productClient: ClientProxy,
         @Inject('TIMELINE_SERVICE') private timelineClient: ClientProxy
         ) {}
-        //only the first one works. Later in development, get all should only come from the timeline
         @Get()
     async allProduct() {
         const result = await this.productClient.send('product_request_all', {});
         return result;
     }
-        @Get()
+        @Get('timeline')
     async allTimeline() {
-        const result = await this.timelineClient.send('product_request_all', {});
+        const result = await this.timelineClient.send('timeline_request_all', {});
         return result;
     }
 
