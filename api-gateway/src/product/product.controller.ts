@@ -26,8 +26,9 @@ export class ProductController {
         @Body('description') description: string,
         @Body('user_id') user_id: number,
         @Body('category') category: string,
+        @Body('price') price: string,
         ) {
-            const result = this.productClient.send('product_created_gateway', {title, description, category, user_id});
+            const result = this.productClient.send('product_created_gateway', {title, description, category, user_id, price});
             return result;
     }
 
