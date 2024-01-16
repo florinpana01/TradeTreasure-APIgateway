@@ -22,6 +22,13 @@ export class UserController {
     return result;
   }
 
+  @Get('role/:email')
+  async getUserRole(@Param('email') email: string) {
+    const result = await this.client.send('user_role_request_by_email', { email }).toPromise();
+    console.log(result);
+    return result;
+  }
+
   @EventPattern('test')
   async hello() {
     console.log('  ');
@@ -72,10 +79,10 @@ export class UserController {
     // });
   }
 
-  @Delete(':id')
-  async delete(@Param('id') id: number) {
-    const result = this.client.send('user_deleted_gateway', { id });
+  @Delete(':email')
+  async delete(@Param('email') email: string, @Body('deleterEmail') deleterEmail: string) {
+    const result = this.client.send('user_deleted_gateway', { email, deleterEmail });
     return result;
-    // return this.userService.delete(id);
   }
+  
 }
