@@ -1,7 +1,7 @@
-import { Body, Controller, Delete, Get, Inject, Param, Post, Put } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Inject, Param, Post, Put, Req, UseGuards } from '@nestjs/common';
 import { ClientProxy, EventPattern } from '@nestjs/microservices';
 import * as bcrypt from 'bcrypt';
-
+import { FirebaseAuthMiddleware } from 'src/FirebaseAuthMiddleware/firebase-auth.middleware';
 @Controller('users')
 export class UserController {
 
@@ -16,7 +16,14 @@ export class UserController {
   }
 
   @Get('email/:email')
-  async getUserByEmail(@Param('email') email: string) {
+  @UseGuards(FirebaseAuthMiddleware)
+  async getUserByEmail(@Param('email') email: string, @Req() req: any) {
+    const authenticatedUserEmail = req.user.email;
+      
+    // Perform additional checks or retrieve user-specific data using the email
+  if (authenticatedUserEmail !== email) {
+    return { message: 'Unauthorized access. The authenticated user does not match the requested email.' };
+  }
     const result = await this.client.send('user_request_by_email', { email }).toPromise();
     console.log(result);
     return result;
@@ -86,3 +93,4 @@ export class UserController {
   }
   
 }
+
